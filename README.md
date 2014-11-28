@@ -14,7 +14,7 @@ a11y.options = {
 };
 a11y_focus_first();
 a11y_aria_label(deep);
-a11y_cntrl(enabled);
+a11y_cntrl(enabled, withDisabled);
 a11y_text(text);
 a11y_popup();
 a11y_popdown();
@@ -75,11 +75,12 @@ Use the above code to make aria-labels readable on a touchscreen
   
 
 ```
-$('selector').a11y_cntrl(enabled)
+$('selector').a11y_cntrl(enabled, withDisabled)
 ```
 Use the above to toggle selection of controls  
 * Adds tabindex="0"  
 * Removes aria-hidden from parent tree   
+* If withDisabled will also add+remove 'disabled' attribute and class
   
   
 ```
