@@ -51,7 +51,7 @@ $('selector').a11y_aria_label(deep);
 ```
 Use the above code to make aria-labels readable on a touchscreen  
 * Applies to 'div[aria-label], span[aria-label]'  
-* Creates '<a class="aria-label prevent-default" role="region" href="#">' as first child of selected  
+* Creates '&gt;a class="aria-label prevent-default" role="region" href="#"&lt;' as first child of selected  
 
 
 ```
