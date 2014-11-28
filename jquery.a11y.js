@@ -74,7 +74,7 @@ $(function() {
     var makeTabbable = function($element) {
         if ($element.is(".sr-only")) return $element;
         $element.attr({
-            "role": "region",
+            "role": "textbox",
             "tabindex": 0
         }).addClass("prevent-default");
         return $element;
