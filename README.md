@@ -12,12 +12,13 @@ a11y.options = {
 	offsetBottom: 0,
 	animateDuration: 250
 };
-a11y_focus_first();
+a11y_focus();
 a11y_aria_label(deep);
 a11y_cntrl_enabled(enabled);
 a11y_cntrl(enabled, withDisabled);
 a11y_on(enabled);
 a11y_text(text);
+a11y_only();
 a11y_popup();
 a11y_popdown();
 ````
@@ -60,8 +61,8 @@ Use the above code to turn on accessibilty.
   
 
 ```
-$.a11y_focus_first();
-$('selector').a11y_focus_first();
+$.a11y_focus();
+$('selector').a11y_focus();
 ```
 Use the above code to focus on the first tabbable element   
 * Focuses on first occurance of '[tabindex]:visible:not([tabindex="-1"])'  
@@ -100,8 +101,9 @@ Use the above to toggle selection of tab indexes on children
   
 ```
 $.a11y_text(text)
+$.a11y_text(htmlstring)
 ```
-Use the above to make html/text into tabbable html  
+Use the above to make html/text string into tabbable html string  
   
     
 ```
@@ -112,11 +114,17 @@ Use the above to make selected elements html/text into tabbable html
 * Ignores 'b, br, i, abbr, strong'  
 * Wraps text nodes in '&lt;span tabindex="0" role="region"&gt;&lt;/span&gt;' or adds [tabindex="0"][role="region"] to parent    
   
-
+  
+```
+$('selector').a11y_only()
+```
+Use above to restrict tabbable / readable focus to selected elements  
+  
+  
 ```
 $('selector').a11y_popup()
 ```
-Use above to restrict tabbable / readable focus to selected elements  
+Use above to restrict tabbable / readable focus to selected elements, undo with function below  
   
   
 ```
