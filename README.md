@@ -4,6 +4,23 @@ jquery.a11y
 
 JQuery General Accessibility Plugin  
 
+Quick ref:
+```
+a11y(enabled, options);
+a11y.options = {
+	offsetTop: 0,
+	offsetBottom: 0,
+	animateDuration: 250
+};
+a11y_focus_first();
+a11y_aria_label(deep);
+a11y_cntrl(enabled);
+a11y_text(text);
+a11y_popup();
+a11y_popdown();
+````
+
+
 
 ```
 <style id='a11y'>
