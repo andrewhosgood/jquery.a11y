@@ -168,6 +168,16 @@ $(function() {
         return true;
     };
 
+     $.fn.a11y_focus_first = function() {
+        if (!$.a11y.enabled) return this;
+        if (this.length === 0) return this;
+        //IF HAS ACCESSIBILITY, FOCUS ON FIRST VISIBLE TAB INDEX
+        _.defer(_.bind(function(){
+            var tags = $(this[0]).find("[tabindex]:visible:not([tabindex='-1'])");
+            if (tags.length > 0) $(tags[0]).focus();
+        }, this));
+        return this;
+    };
 
     $.a11y = function(enabled, options) {
         enabled = enabled === undefined ? true : enabled;
@@ -243,6 +253,10 @@ $(function() {
         return this;
     };
 
+    $.fn.a11y_cntrl_enabled = function(enabled) {
+        return this.a11y_cntrl(enabled, true);
+    };
+
     $.fn.a11y_cntrl = function(enabled, withDisabled) {
         enabled = enabled === undefined ? true : enabled;
         for (var i = 0; i < this.length; i++) {
@@ -264,6 +278,12 @@ $(function() {
                 }
             }
         }
+        return this;
+    };
+
+    $.fn.a11y_on = function(enabled) {
+        enabled = enabled === undefined ? true : enabled;
+        this.find(tabIndexElements).a11y_cntrl(enabled);
         return this;
     };
 

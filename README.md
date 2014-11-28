@@ -14,7 +14,9 @@ a11y.options = {
 };
 a11y_focus_first();
 a11y_aria_label(deep);
+a11y_cntrl_enabled(enabled);
 a11y_cntrl(enabled, withDisabled);
+a11y_on(enabled);
 a11y_text(text);
 a11y_popup();
 a11y_popdown();
@@ -59,6 +61,7 @@ Use the above code to turn on accessibilty.
 
 ```
 $.a11y_focus_first();
+$('selector').a11y_focus_first();
 ```
 Use the above code to focus on the first tabbable element   
 * Focuses on first occurance of '[tabindex]:visible:not([tabindex="-1"])'  
@@ -76,11 +79,23 @@ Use the above code to make aria-labels readable on a touchscreen
 
 ```
 $('selector').a11y_cntrl(enabled, withDisabled)
+$('selector').a11y_cntrl_enabled(enabled)
 ```
 Use the above to toggle selection of controls  
 * Adds tabindex="0"  
 * Removes aria-hidden from parent tree   
 * If withDisabled will also add+remove 'disabled' attribute and class
+* $('selector').a11y_cntrl_enabled(enabled) is a shortcut for $('selector').a11y_cntrl(enabled, true) 
+  
+  
+```
+$('selector').a11y_on(enabled)
+```
+Use the above to toggle selection of tab indexes on children  
+* Performs a11y_cntrl(enabled) on all focusable elements in selector
+  
+  
+  
   
   
 ```
