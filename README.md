@@ -4,7 +4,7 @@ jquery.a11y
 
 JQuery General Accessibility Plugin  
 
-Quick ref:
+###Quick ref
 ```
 a11y(enabled, options);
 a11y.options = {
@@ -19,9 +19,9 @@ a11y_text(text);
 a11y_popup();
 a11y_popdown();
 ````
-
-
-
+  
+###Functional Descriptions
+  
 ```
 <style id='a11y'>
 a.aria-label {
