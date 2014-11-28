@@ -65,7 +65,7 @@ $(function() {
         if ($(event.currentTarget).has("[tabindex='0']")) return;
         defer(function() {
             if ($(document.activeElement).is("body")) {
-                $(event.target).focus();
+                $(event.target).focusNoScroll();
             }    
         });
     };
@@ -230,7 +230,7 @@ $(function() {
         //IF HAS ACCESSIBILITY, FOCUS ON FIRST VISIBLE TAB INDEX
         defer(function(){
             var tags = $("[tabindex]:visible:not([tabindex='-1'])");
-            if (tags.length > 0) $(tags[0]).focus();
+            if (tags.length > 0) $(tags[0]).focusNoScroll();
         });
         return true;
     };
@@ -242,7 +242,7 @@ $(function() {
         //IF HAS ACCESSIBILITY, FOCUS ON FIRST VISIBLE TAB INDEX
         defer(function(){
             var tags = $(this[0]).find("[tabindex]:visible:not([tabindex='-1'])");
-            if (tags.length > 0) $(tags[0]).focus();
+            if (tags.length > 0) $(tags[0]).focusNoScroll();
         }, this);
         return this;
     };
@@ -372,11 +372,19 @@ $(function() {
 
         if ($activeElement) {
             if($activeElement.is(':visible:not(:disabled)')) {
-                $activeElement.focus();
+                $activeElement.focusNoScroll();
             } else {
-                $activeElement.next().focus();
+                $activeElement.next().focusNoScroll();
             }
         }
+    };
+
+    //jQuery function to focus with no scroll (accessibility requirement for control focus)
+    $.fn.focusNoScroll = function(){
+      var y = $(window).scrollTop();
+      if (this.length > 0) this[0].focus();
+      window.scrollTo(null, y);
+      return this; //chainability
     };
 
 });

@@ -21,6 +21,7 @@ a11y_text(text);
 a11y_only();
 a11y_popup();
 a11y_popdown();
+focusNoScroll();
 ````
   
 ###Functional Descriptions
