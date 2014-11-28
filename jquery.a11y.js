@@ -211,7 +211,7 @@ $(function() {
         if ($.a11y.enabled) {
             //ADDS TAB GUARG EVENT HANDLER
             $('#a11y-focusguard').remove().appendTo($('body')).on("focus", function() {
-               $.a11y_focus_first();
+               $.a11y_focus();
             }).attr("tabindex", 0);
         }
     };
@@ -344,7 +344,7 @@ $(function() {
             'tabindex': 0
         }).removeAttr('aria-hidden').parents().removeAttr('aria-hidden');
 
-        $.a11y_focus_first();
+        $.a11y_focus();
     };
 
     //ALLOWS RESTORATIVE FOCUS ON SELECTED ELEMENTS ONLY
@@ -354,7 +354,7 @@ $(function() {
 
         this.a11y_only();
         
-        $.a11y_focus_first();
+        $.a11y_focus();
     };
 
     //RESTORES FOCUS TO PREVIOUS STATE AFTER a11y_popup
