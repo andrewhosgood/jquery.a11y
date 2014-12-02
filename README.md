@@ -15,9 +15,9 @@ a11y.options = {
 };
   
 MAKE ACCESSIBLE:  
-a11y_cntrl_enabled(enabled);
-a11y_cntrl(enabled, withDisabled);
-a11y_on(enabled);
+a11y_cntrl_enabled(isOn);
+a11y_cntrl(isOn, withDisabled);
+a11y_on(isOn);
 a11y_text(text);
 
 READ TEXT:
@@ -92,18 +92,18 @@ Use the above code to make aria-labels readable on a touchscreen
   
 
 ```
-$('selector').a11y_cntrl(enabled, withDisabled)
-$('selector').a11y_cntrl_enabled(enabled)
+$('selector').a11y_cntrl(isOn, withDisabled)
+$('selector').a11y_cntrl_enabled(isOn)
 ```
 Use the above to toggle selection of controls  
 * Adds tabindex="0"  
 * Removes aria-hidden from parent tree   
 * If withDisabled will also add+remove 'disabled' attribute and class
-* $('selector').a11y_cntrl_enabled(enabled) is a shortcut for $('selector').a11y_cntrl(enabled, true) 
+* $('selector').a11y_cntrl_enabled(isOn) is a shortcut for $('selector').a11y_cntrl(isOn, true) 
   
   
 ```
-$('selector').a11y_on(enabled)
+$('selector').a11y_on(isOn)
 ```
 Use the above to toggle selection of tab indexes on children  
 * Performs a11y_cntrl(enabled) on all focusable elements in selector
