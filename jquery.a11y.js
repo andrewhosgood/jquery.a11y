@@ -17,7 +17,7 @@ $(function() {
     var a11yStyle = $('head').find("style[id='a11y']");
     if (a11yStyle.length === 0) {
         $("<style id='a11y'>").html(".aria-label {"+
-            "position:relative;"+
+            "position:absolute;"+
             "left:0px;"+
             "width:auto;"+
             "height:auto;"+
@@ -25,7 +25,14 @@ $(function() {
             "color: rgba(0,0,0,0) !important;"+
             "background: rgba(0,0,0,0) !important;"+
             "font-size: 1px !important;"+
-        "}").appendTo($("head"));
+            "padding:0 !important;"+
+            "margin:0 !important;"+
+        "}"/*+
+        ".accessible-text-block {"+
+        "background-color: black !important;"+
+        "color: white !important;"+
+        "}"*/
+        ).appendTo($("head"));
     }
 
     //PREVENT DEFAULT CLICK ACTION FUNCTION
@@ -47,7 +54,9 @@ $(function() {
     var scrollToFocus = function(event) {
         if (!$.a11y.enabled) return;
         if ($(event.target).is("#a11y-focusguard")) return;
-        if (isFixedPosition(event.target)) return;
+        if (isFixedPosition(event.target)) {
+            return;
+        }
         var offset = $.a11y.options.offsetTop;
         var to = $(event.target).offset()["top"]
         var st = $(window).scrollTop() + offset;
@@ -56,7 +65,7 @@ $(function() {
         if (to < st || to > stbottom) {
             var sto = to - offset;
             if (sto < 0) sto = 0;
-            $.scrollTo(sto, {duration:$.a11y.options.animateDuration});
+            $.scrollTo(sto, {duration: 0});
         }
     };
 
@@ -70,13 +79,52 @@ $(function() {
         });
     };
 
+    //CAPTURE ESCAPE
+    var keyUp = function(event) {
+        switch (event.which) {
+        case 27: //ESCAPE KEY
+            $.a11y_focus();
+            break;
+        }
+    };
+
+    //CAPTURE SPACE
+    var keyDown = function(event) {
+        switch (event.which) {
+        case 32:
+            switch (event.target.tagName.toLowerCase()) {
+            case "textarea": case "text":
+                break;
+            default: 
+                //STOP SPACE FROM SCROLLING / SELECTING
+                event.preventDefault();
+                event.stopPropagation();
+                //TURN SPACE INTO CLICK
+                $(event.target).trigger("click");
+                return;
+            }
+        case 13:
+            switch (event.target.tagName.toLowerCase()) {
+            case "textarea":
+                break;
+            default: 
+                //STOP SPACE FROM SCROLLING / SELECTING
+                event.preventDefault();
+                event.stopPropagation();
+                //TURN SPACE INTO CLICK
+                $(event.target).trigger("click");
+                return;
+            }
+        }
+    };
+
     //MAKES AN ELEMENT TABBABLE
     var makeTabbable = function($element) {
         if ($element.is(".sr-only")) return $element;
         $element.attr({
-            "role": "textbox",
-            "tabindex": 0
-        }).addClass("prevent-default");
+            "role": "region",
+            "tabindex": 0,
+        }).addClass("prevent-default").addClass("accessible-text-block");
         return $element;
     };
 
@@ -170,6 +218,12 @@ $(function() {
         return flatten( makeChildNodesAccessible($element) );
     };
 
+    var reattachFocusGuard = function() {
+        $('#a11y-focusguard').remove().appendTo($('body')).on("focus", function() {
+           $.a11y_focus();
+        }).attr("tabindex", 0);
+    };
+
 
     //TURN ON ACCESSIBILITY FEATURES
     $.a11y = function(enabled, options) {
@@ -188,20 +242,29 @@ $(function() {
             $.a11y.enabled = enabled;
             if (enabled) {
                 //ADDS TAB GUARD, CLICK ON ACCESSIBLE TEXT AND SCROLL TO FOCUS EVENT HANDLERS
+                $(window)
+                .on("keyup", keyUp)
+                .on("keydown", keyDown);
                 $("body")
                 .on("click", ".prevent-default", preventDefault)
-                .on("focus", "[tabindex='0']", scrollToFocus)
-                .append($('<div id="a11y-focusguard" tabindex="0">'));
+                .on("focus", tabIndexElements, scrollToFocus)
+                .append($('<div id="a11y-focusguard" tabindex="0">'))
+                .append($('<div id="a11y-alert" tabindex="-1">'));
+
 
                 //ADDS CLICK ON BODY EVENT HANDLER
                 $('html').on("blur", "*", refocusEventTarget);
 
             } else {
                 //REMOVES TAB GUARD, CLICK ON ACCESSIBLE TEXT AND SCROLL TO FOCUS EVENT HANDLERS
+                $(window)
+                .off("keyup", keyUp)
+                .off("keydown", keyDown);
                 $("body")
                 .off("click", ".prevent-default", preventDefault)
-                .off("focus", "[tabindex='0']", scrollToFocus);
+                .off("focus", tabIndexElements, scrollToFocus);
                 $('#a11y-focusguard').remove();
+                $('#ally-alert').remove();
 
                 //REMOVES CLICK ON BODY EVENT HANDLER
                 $('html').off("blur", "*", refocusEventTarget);
@@ -210,9 +273,7 @@ $(function() {
 
         if ($.a11y.enabled) {
             //ADDS TAB GUARG EVENT HANDLER
-            $('#a11y-focusguard').remove().appendTo($('body')).on("focus", function() {
-               $.a11y_focus();
-            }).attr("tabindex", 0);
+            reattachFocusGuard();
         }
     };
     $.a11y.enabled = false;
@@ -229,9 +290,11 @@ $(function() {
         if (!$.a11y.enabled) return false;
         //IF HAS ACCESSIBILITY, FOCUS ON FIRST VISIBLE TAB INDEX
         defer(function(){
-            var tags = $("[tabindex]:visible:not([tabindex='-1'])");
+            var tags = $("[tabindex]:visible:not([tabindex='-1']):not([skipfocus='true'])");
             if (tags.length > 0) $(tags[0]).focusNoScroll();
         });
+        //SCROLL TO TOP IF NOT POPUPS ARE OPEN
+        if ($.a11y.focusStack.length === 0) $(window).scrollTo(0);
         return true;
     };
 
@@ -241,13 +304,20 @@ $(function() {
         if (this.length === 0) return this;
         //IF HAS ACCESSIBILITY, FOCUS ON FIRST VISIBLE TAB INDEX
         defer(function(){
-            var tags = $(this[0]).find("[tabindex]:visible:not([tabindex='-1'])");
+            var tags = $(this[0]).find("[tabindex]:visible:not([tabindex='-1']):not([skipfocus='true'])");
             if (tags.length > 0) $(tags[0]).focusNoScroll();
         }, this);
         return this;
     };
 
-    
+    $.a11y_alert = function(text) {
+        var alertElement = $("<div role='alert' tabindex='-1'>").html(text);
+        $('#a11y-alert').append( alertElement );
+
+        setTimeout(function() {
+            alertElement.remove();
+        },20000);
+    };  
 
     //TURNS aria-label ATTRIBUTES INTO SPAN TAGS
     $.fn.a11y_aria_label = function(deep) {
@@ -268,8 +338,11 @@ $(function() {
             var children = $item.children();
             if (children.length === 0) continue;
             if ($(children[0]).is(".aria-label")) continue;
-            if ($item.attr("aria-label") === undefined || $item.attr("aria-label") == "") continue;
-            var sudoElement = $("<a class='aria-label prevent-default' role='region' href='#'>");
+            if ($item.attr("aria-label") == "") {
+                $item.removeAttr("aria-label").removeAttr("tabindex");
+                continue;
+            }
+            var sudoElement = $("<a class='aria-label prevent-default' tabindex='0' role='region'>");
             sudoElement.on("click", preventDefault);
             sudoElement.html($item.attr("aria-label"));
             $item.prepend(sudoElement);
@@ -330,8 +403,11 @@ $(function() {
     };
 
     //ALLOWS FOCUS ON SELECTED ELEMENTS ONLY
-    $.fn.a11y_only = function() {
-        $(tabIndexElements).each(function(index, item) {
+    $.fn.a11y_only = function(container) {
+        var $elements;
+        if (container !== undefined) $elements = $(container).find(tabIndexElements);
+        else $elements = $(tabIndexElements);
+        $elements.each(function(index, item) {
             var $item = $(item);
             if (item._a11y === undefined) item._a11y = [];
             item._a11y.push( $item.attr('tabindex') || 0 );
@@ -345,6 +421,7 @@ $(function() {
         }).removeAttr('aria-hidden').parents().removeAttr('aria-hidden');
 
         $.a11y_focus();
+        return this;
     };
 
     //ALLOWS RESTORATIVE FOCUS ON SELECTED ELEMENTS ONLY
@@ -355,6 +432,11 @@ $(function() {
         this.a11y_only();
         
         $.a11y_focus();
+
+        if (this.length > 0) scrollToFocus({target: this[0] });
+
+        reattachFocusGuard();
+        return this;
     };
 
     //RESTORES FOCUS TO PREVIOUS STATE AFTER a11y_popup
@@ -371,12 +453,16 @@ $(function() {
         var $activeElement = $.a11y.focusStack.pop();
 
         if ($activeElement) {
-            if($activeElement.is(':visible:not(:disabled)')) {
+            if($activeElement.is(":visible:not(.disabled):not(:disabled):not([skipfocus='true'])")) {
                 $activeElement.focusNoScroll();
             } else {
-                $activeElement.next().focusNoScroll();
+                $activeElement.next("[tabindex='0']:visible:not(.disabled):not(:disabled):not([skipfocus='true'])").focusNoScroll();
             }
         }
+
+        scrollToFocus({target: document.activeElement });
+
+        reattachFocusGuard();
     };
 
     //jQuery function to focus with no scroll (accessibility requirement for control focus)

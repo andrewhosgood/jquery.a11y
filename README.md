@@ -6,22 +6,34 @@ JQuery General Accessibility Plugin
 
 ###Quick ref
 ```
+ENABLE:  
 a11y(enabled, options);
 a11y.options = {
 	offsetTop: 0,
 	offsetBottom: 0,
 	animateDuration: 250
 };
-a11y_focus();
-a11y_aria_label(deep);
+  
+MAKE ACCESSIBLE:  
 a11y_cntrl_enabled(enabled);
 a11y_cntrl(enabled, withDisabled);
 a11y_on(enabled);
 a11y_text(text);
+
+READ TEXT:
+a11y_alert(text);
+  
+FOCUS RESTRICTION:  
 a11y_only();
 a11y_popup();
 a11y_popdown();
+  
+SET FOCUS:  
 focusNoScroll();
+a11y_focus();
+  
+CONVERT ARIA LABELS:    
+a11y_aria_label(deep);
 ````
   
 ###Functional Descriptions
@@ -106,7 +118,13 @@ $.a11y_text(htmlstring)
 ```
 Use the above to make html/text string into tabbable html string  
   
-    
+   
+```
+$.a11y_alert(text)
+```
+Make screen reader read text as alert using [role="alert"]  
+  
+
 ```
 $('selector').a11y_text()
 ```
