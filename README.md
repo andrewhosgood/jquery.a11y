@@ -40,7 +40,7 @@ a11y_aria_label(deep);
   
 ```
 <style id='a11y'>
-a.aria-label {
+.aria-label {
 	position:absolute;
 	left:0px;
 	width:auto;
