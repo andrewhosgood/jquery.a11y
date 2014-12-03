@@ -124,6 +124,7 @@ $.fn.a11y_selected(isOn)
 ```
 Make screen reader read item as "selected [item text]"  
 * Will only work with innerHTML text on 'a' tags  
+* Use isOn = false to remove 'selected' text from element
   
 
 ```
