@@ -20,8 +20,8 @@ a11y_cntrl(isOn, withDisabled);
 a11y_on(isOn);
 a11y_text(text);
 
-READ TEXT:
-a11y_alert(text);
+MAKE SELECTED:
+a11y_selected(isOn);
   
 FOCUS RESTRICTION:  
 a11y_only();
@@ -120,9 +120,10 @@ Use the above to make html/text string into tabbable html string
   
    
 ```
-$.a11y_alert(text)
+$.fn.a11y_selected(isOn)
 ```
-Make screen reader read text as alert using [role="alert"]  
+Make screen reader read item as "selected [item text]"  
+* Will only work with innerHTML text on 'a' tags  
   
 
 ```
