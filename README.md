@@ -6,34 +6,46 @@ JQuery General Accessibility Plugin
 
 ###Quick ref
 ```
-ENABLE:  
-a11y(enabled, options);
-a11y.options = {
+TURN ON:  
+$.a11y(isOn, options);
+
+OPTIONS:
+$.a11y.options = {
 	offsetTop: 0,
 	offsetBottom: 0,
-	animateDuration: 250
+	animateDuration: 250,
+	OS: "",
+	isOn: false
 };
-  
-MAKE ACCESSIBLE:  
-a11y_cntrl_enabled(isOn);
-a11y_cntrl(isOn, withDisabled);
-a11y_on(isOn);
-a11y_text(text);
+
+TOGGLE ACCESSIBILITY:  
+$.a11y_on(isOn);  
+$('').a11y_on(isOn);  
+
+MAKE ACCESSIBLE CONTROLS:  
+$('').a11y_cntrl(isOn, withDisabled);
+$('').a11y_cntrl_enabled(isOn);
+
+MAKE ACCESSIBLE TEXT:  
+$.a11y_normalize(text)
+$.a11y_text(text);
+$('').a11y_text();
 
 MAKE SELECTED:
-a11y_selected(isOn);
+$('').a11y_selected(isOn);
   
 FOCUS RESTRICTION:  
-a11y_only();
-a11y_popup();
-a11y_popdown();
+$('').a11y_only();
+$('').a11y_popup();
+$.a11y_popdown();
   
 SET FOCUS:  
-focusNoScroll();
-a11y_focus();
+$('').focusNoScroll();
+$.a11y_focus();
+$('').a11y_focus();
   
 CONVERT ARIA LABELS:    
-a11y_aria_label(deep);
+$('').a11y_aria_label(deep);
 ````
   
 ###Functional Descriptions
