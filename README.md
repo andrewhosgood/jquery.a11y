@@ -213,6 +213,11 @@ This function returns the text attribute having removed "& ... ;" style html cha
 $.a11y_text(text);
 ```
 Use the above to make html/text string into tabbable html string  
+* Ignores 'a, button, input, select, textarea'  
+* Ignores 'b, br, i, abbr, strong'  
+* Wraps text nodes in '&lt;span tabindex="0" role="region"&gt;&lt;/span&gt;' or adds [tabindex="0"][role="region"] to parent 
+   
+#####Method
 1.  Converts string to ```<div>text</div>``` dom node  
 2.  Counts children, if no child dom nodes assume text and wrap in a tabbable span tag and return  
 3.  Count children style elements (b,i,strong,abbr), if only style elements wrap in a tabbable span tag and return  
@@ -236,6 +241,10 @@ Use the above to make selection .innerHTML strings into tabbable html strings us
 ```
 $('').a11y_selected(isOn);
 ```
+Make screen reader read item as "selected [item text]"  
+* Will only work with innerHTML text on 'a' tags  
+* Use isOn = false to remove 'selected' text from element  
+
 Use the above code to toggle element selection  
 * For mac (if $.a11y.options.OS == "mac"), this will create a visibly hidden span tag for the screen reader and move focus to it.
 * Otherwise (if $.a11y.options.OS !== "mac"), this will create an 'aria-alert' in the #a11y-selected div to be read automatically by a screen reader (this does not work on mac voiceover for some reason).
@@ -245,115 +254,47 @@ Use the above code to toggle element selection
 ```
 $('').a11y_only(container, storeLastTabIndex);
 ```
+Use above to restrict tabbable / readable focus to selected elements (optionally using a container)
+* Will store element tabindex if asked to for use with a11y_popdown
 
 
 ####$('').a11y_popup()
 ```
 $('').a11y_popup(container);
 ```
+Use above to restrict tabbable / readable focus to selected elements (optionally using a container), undo with function below  
 
 ####$.a11y_popdown()
 ```
 $.a11y_popdown();
 ```
-
+Use above to relax a11y_popup restriction  
+  
    
 ###SET FOCUS
 ```
-$('').focusNoScroll();
 $.a11y_focus();
 $('').a11y_focus();
 ```
+Use the above code to focus on the first tabbable element   
+* Focuses on first occurance of [tabindex='0']:visible:not(.disabled):not([tabindex='-1']):not(:disabled):not(.a11y-ignore-focus)  
   
 ###CONVERT ARIA LABELS
 ```
 $('').a11y_aria_label(deep);
 ```
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-
-```
-$.a11y_focus();
-$('selector').a11y_focus();
-```
-Use the above code to focus on the first tabbable element   
-* Focuses on first occurance of '[tabindex]:visible:not([tabindex="-1"])'  
-  
-  
-
-```
-$('selector').a11y_aria_label(deep);
-```
 Use the above code to make aria-labels readable on a touchscreen  
 * Applies to 'div[aria-label], span[aria-label]'  
 * Creates '&lt;a class="aria-label prevent-default" role="region" href="#"&gt;' as first child of selected  
-  
 
-  
-   
+###UTILITY
+####$('').focusNoScroll()
 ```
-$.fn.a11y_selected(isOn)
+$('').focusNoScroll();
 ```
-Make screen reader read item as "selected [item text]"  
-* Will only work with innerHTML text on 'a' tags  
-* Use isOn = false to remove 'selected' text from element
-  
+[Ronseal](http://www.ronseal.co.uk/)
 
-```
-$('selector').a11y_text()
-```
-Use the above to make selected elements html/text into tabbable html  
-* Ignores 'a, button, input, select, textarea'  
-* Ignores 'b, br, i, abbr, strong'  
-* Wraps text nodes in '&lt;span tabindex="0" role="region"&gt;&lt;/span&gt;' or adds [tabindex="0"][role="region"] to parent    
-  
-  
-```
-$('selector').a11y_only()
-```
-Use above to restrict tabbable / readable focus to selected elements  
-  
-  
-```
-$('selector').a11y_popup()
-```
-Use above to restrict tabbable / readable focus to selected elements, undo with function below  
-  
-  
-```
-$.a11y_popdown()
-```
-Use above to relax a11y_popup restriction  
-  
-  
-  
+
 ##Style Descriptions
   
   
