@@ -213,7 +213,7 @@ This function returns the text attribute having removed "& ... ;" style html cha
 $.a11y_text(text);
 ```
 Use the above to make html/text string into tabbable html string  
-1.  Converts string to <div>text</div> dom node  
+1.  Converts string to ```<div>text</div>``` dom node  
 2.  Counts children, if no child dom nodes assume text and wrap in a tabbable span tag and return  
 3.  Count children style elements (b,i,strong,abbr), if only style elements wrap in a tabbable span tag and return  
 4.  Go through each child element  
@@ -231,10 +231,14 @@ $('').a11y_text();
 ```
 Use the above to make selection .innerHTML strings into tabbable html strings using $.a11y_text(.innerHTML) 
 
-####MAKE SELECTED
+###MAKE SELECTED
+####$('').a11y_selected()
 ```
 $('').a11y_selected(isOn);
 ```
+Use the above code to toggle element selection  
+* For mac (if $.a11y.options.OS == "mac"), this will create a visibly hidden span tag for the screen reader and move focus to it.
+* Otherwise (if $.a11y.options.OS !== "mac"), this will create an 'aria-alert' in the #a11y-selected div to be read automatically by a screen reader (this does not work on mac voiceover for some reason).
   
 ####FOCUS RESTRICTION
 ```
