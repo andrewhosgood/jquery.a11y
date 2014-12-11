@@ -121,12 +121,11 @@ $('').focusNoScroll();
 .a11y-ignore
 .a11y-ignore-focus
 ````
+######SPECIAL CLASSES
 ######INTERNALLY APPLIED
 ```
 .aria-hidden
 .a11y-selected
-.accessible-text-block
-.prevent-default
 #a11y-focusguard
 #a11y-focusguard.touch
 #a11y-focusguard.notouch
@@ -310,6 +309,15 @@ Put this class on a tag so that a11y will ignore it for tabindex changes in a11y
 ####.a11y-ignore-focus
 Put this class on a tag so that a11y will ignore it if it is the first item in focus when using a11y_focus.  
   
+  
+######SPECIAL CLASSES
+####.prevent-default  
+Put this class on any tag which should have no click behaviour. This class is applied to all accessible text blocks created by a11y_text and a11y_aria_label. This will prevent the default behaviour on click.    
+  
+####.accessible-text-block  
+Put this class on any tag which may (in the future) require differing contrasts. This class is currently applied to all
+accessible text blocks created by a11y_text.
+
 
 ######INTERNALLY APPLIED
 ####.aria-hidden
@@ -317,13 +325,6 @@ Class applied to elements which have been specifically hidden to screen readers
   
 ####.a11y-selected  
 Class applied to elements which have been selected with a11y_selected  
-  
-####.accessible-text-block  
-Put this class on any tag which may (in the future) require differing contrasts. This class is currently applied to all
-accessible text blocks created by a11y_text.
-  
-####.prevent-default  
-Put this class on any tag which should have no click behaviour. This class is applied to all accessible text blocks created by a11y_text and a11y_aria_label. This will prevent the default behaviour on click.    
   
 #### \#a11y-focusguard  
 Style applied to the focusguard element which returns the user to the top of the document  
