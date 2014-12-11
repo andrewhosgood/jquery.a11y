@@ -3,11 +3,26 @@ jquery.a11y
 
 #jQuery General Accessibility Plugin  
 The extension was created to enable a universal experience on various screen readers and devices, specifically between iPad+safari+voiceover and windows+ie+JAWS and NVDA. It was made to facilitate a better user experience with regards to web navigation, interaction and content.  
+  
+This plugin can be considered an accessibility boiler-plate for a web application. I will help provide the right focus to a screen reader's cursor for controls, content and enable you to create interaction description blocks.
+
 
 ##Installation
 1. Add jquery.a11y.js to your html scripts.  
 2. Add jquery.a11y.css to your html stylesheets.  
+    
   
+  
+##Usage Example
+```
+$.a11y(true); // turn on a11y
+$('text blocks to make accessible').a11y_text(); // make text blocks tabbable
+$('controls to enable').a11y_cntrl_enable(true); // enable certain controls
+$('controls to disable').a11y_cntrl_enable(false); // disable certain controls  
+$('element to popup').popup(); // create a popup and restrict tabbing to it
+$.popdown(); // close popup and relax tabbing
+$.a11y_focus(); // focus on the first tabbable element
+```
   
   
 ##Intended user controls
