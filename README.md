@@ -188,18 +188,49 @@ Use the above to toggle selection of tab indexes and aria-hidden on children
   
   
 ###MAKE ACCESSIBLE CONTROLS
+####$('').a11y_cntrl()
 ```
 $('').a11y_cntrl(isOn, withDisabled);
 $('').a11y_cntrl_enabled(isOn);
 ```
+Use the above to toggle accessibility of controls  
+* Adds/removes tabindex="0"  
+* Adds/removes aria-hidden from parent tree   
+* If withDisabled will also add/remove 'disabled' attribute and class
+* $('selector').a11y_cntrl_enabled(isOn) is a shortcut for $('selector').a11y_cntrl(isOn, true) 
+   
   
-####MAKE ACCESSIBLE TEXT
+###MAKE ACCESSIBLE TEXT
+####$.a11y_normalize()
 ```
 $.a11y_normalize(text);
+```
+This function returns the text attribute having removed "& ... ;" style html characters
+* Especially useful in coverting html text to screen reader aria-labels
+  
+####$.a11y_text()
+```
 $.a11y_text(text);
+```
+Use the above to make html/text string into tabbable html string  
+1. Converts string to <div>text</div> dom node
+2. Counts children, if no child dom nodes assume text and wrap in a tabbable span tag and return
+3. Count children style elements (b,i,strong,abbr), if only style elements wrap in a tabbable span tag and return
+4. Go through each child element
+5. If text only node wrap in tabbable span tag and move to next child element
+6. If node is a style element or a natively tabbable element, ignore and move to next child element
+7. If has no children, make tabbable and move to next child element
+8. If have children, perform same procedure from 2. on child (recursively) and move to next child element
+9. Replace all original children with amended versions
+10. Return element and continue to 9. (for recursion) or procede to 11.
+11. Flatten children into an html string
+  
+####$('').a11y_text();
+```
 $('').a11y_text();
 ```
-  
+Use the above to make selection .innerHTML strings into tabbable html strings using $.a11y_text(.innerHTML) 
+
 ####MAKE SELECTED
 ```
 $('').a11y_selected(isOn);
@@ -269,26 +300,7 @@ Use the above code to make aria-labels readable on a touchscreen
 * Applies to 'div[aria-label], span[aria-label]'  
 * Creates '&lt;a class="aria-label prevent-default" role="region" href="#"&gt;' as first child of selected  
   
-  
 
-```
-$('selector').a11y_cntrl(isOn, withDisabled)
-$('selector').a11y_cntrl_enabled(isOn)
-```
-Use the above to toggle selection of controls  
-* Adds tabindex="0"  
-* Removes aria-hidden from parent tree   
-* If withDisabled will also add+remove 'disabled' attribute and class
-* $('selector').a11y_cntrl_enabled(isOn) is a shortcut for $('selector').a11y_cntrl(isOn, true) 
-  
-  
-
-  
-```
-$.a11y_text(text)
-$.a11y_text(htmlstring)
-```
-Use the above to make html/text string into tabbable html string  
   
    
 ```
