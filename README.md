@@ -12,6 +12,12 @@ This plugin can be considered an accessibility boiler-plate for a web applicatio
     
   
   
+##Recommended companions
+[bowserjs](http://www.bowserjs.org/) for browser detection, required for mac osx selection alerts.
+[modernizr](http://modernizr.com/) for touch detection, required for returning focus to top of page
+  
+  
+  
 ##Usage Example
 ```
 $.a11y(true); // turn on a11y
