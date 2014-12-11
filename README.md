@@ -13,8 +13,8 @@ This plugin can be considered an accessibility boiler-plate for a web applicatio
   
   
 ##Recommended companions
-[bowserjs](http://www.bowserjs.org/) for browser detection, required for mac osx selection alerts.
-[modernizr](http://modernizr.com/) for touch detection, required for returning focus to top of page
+* [bowserjs](http://www.bowserjs.org/) for browser detection (required for mac osx selection alerts)
+* [modernizr](http://modernizr.com/) for touch detection (required for returning focus to top of page)
   
   
   
@@ -53,12 +53,14 @@ $.a11y_focus(); // focus on the first tabbable element
   
   
 ##Function Quick Reference
+####TURN ON & UPDATE
 ```
-TURN ON:  
 $.a11y(isOn, options);
 $.a11y_update();
-
-OPTIONS:
+```
+  
+####OPTIONS
+```
 $.a11y.options = {
 	focusOffsetTop: 0,
 	focusOffsetBottom: 0,
@@ -66,36 +68,50 @@ $.a11y.options = {
 	isTouchDevice: false,
 	isOn: false
 };
-
-TOGGLE ACCESSIBILITY:  
+```
+  
+####TOGGLE ACCESSIBILITY
+```
 $.a11y_on(isOn);  
 $('').a11y_on(isOn);  
-
-MAKE ACCESSIBLE CONTROLS:  
+```
+  
+####MAKE ACCESSIBLE CONTROLS
+```
 $('').a11y_cntrl(isOn, withDisabled);
 $('').a11y_cntrl_enabled(isOn);
-
-MAKE ACCESSIBLE TEXT:  
+```
+  
+####MAKE ACCESSIBLE TEXT
+```
 $.a11y_normalize(text);
 $.a11y_text(text);
 $('').a11y_text();
-
-MAKE SELECTED:
-$('').a11y_selected(isOn);
+```
   
-FOCUS RESTRICTION:  
+####MAKE SELECTED
+```
+$('').a11y_selected(isOn);
+```
+  
+####FOCUS RESTRICTION
+```
 $('').a11y_only(container, );
 $('').a11y_popup();
 $.a11y_popdown();
-  
-SET FOCUS:  
+```
+   
+####SET FOCUS
+```
 $('').focusNoScroll();
 $.a11y_focus();
 $('').a11y_focus();
+```
   
-CONVERT ARIA LABELS:    
+####CONVERT ARIA LABELS
+```
 $('').a11y_aria_label(deep);
-````
+```
   
   
   
