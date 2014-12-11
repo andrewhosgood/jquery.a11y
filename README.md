@@ -122,6 +122,10 @@ $('').focusNoScroll();
 .a11y-ignore-focus
 ````
 ######SPECIAL CLASSES
+```
+.accessible-text-block
+.prevent-default
+```
 ######INTERNALLY APPLIED
 ```
 .aria-hidden
