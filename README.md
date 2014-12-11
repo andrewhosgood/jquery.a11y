@@ -32,19 +32,19 @@ $.a11y_focus(); // focus on the first tabbable element
   
 ##Intended user controls
 
-####PC + NVDA/JAWS, MAC + VOICEOVER  
+######PC + NVDA/JAWS, MAC + VOICEOVER  
 * tab = next  
 * shift+tab = previous  
 * enter/space = select  
 * escape = go to first focusable element  
-  
-####IPAD + VOICEOVER
+
+######IPAD + VOICEOVER
 * swipt right = next  
 * swipt left = previous  
 * double tap = select  
 * two finger swipe up = go to first focusable element  
 
-####IPAD + VOICEOVER + KEYBOARD  
+######IPAD + VOICEOVER + KEYBOARD  
 * right = next  
 * left = previous  
 * up+down = select  
@@ -53,13 +53,12 @@ $.a11y_focus(); // focus on the first tabbable element
   
   
 ##Function Quick Reference
-####TURN ON & UPDATE
+######TURN ON & UPDATE
 ```
 $.a11y(isOn, options);
 $.a11y_update();
 ```
-  
-####OPTIONS
+######OPTIONS
 ```
 $.a11y.options = {
 	focusOffsetTop: 0,
@@ -69,65 +68,60 @@ $.a11y.options = {
 	isOn: false
 };
 ```
-  
-####TOGGLE ACCESSIBILITY
+######TOGGLE ACCESSIBILITY
 ```
 $.a11y_on(isOn);  
 $('').a11y_on(isOn);  
 ```
-  
-####MAKE ACCESSIBLE CONTROLS
+######MAKE ACCESSIBLE CONTROLS
 ```
 $('').a11y_cntrl(isOn, withDisabled);
 $('').a11y_cntrl_enabled(isOn);
 ```
-  
-####MAKE ACCESSIBLE TEXT
+######MAKE ACCESSIBLE TEXT
 ```
 $.a11y_normalize(text);
 $.a11y_text(text);
 $('').a11y_text();
 ```
-  
-####MAKE SELECTED
+######MAKE SELECTED
 ```
 $('').a11y_selected(isOn);
 ```
-  
-####FOCUS RESTRICTION
+######FOCUS RESTRICTION
 ```
 $('').a11y_only(container, );
 $('').a11y_popup();
 $.a11y_popdown();
 ```
-   
-####SET FOCUS
+######SET FOCUS
 ```
 $('').focusNoScroll();
 $.a11y_focus();
 $('').a11y_focus();
 ```
-  
-####CONVERT ARIA LABELS
+######CONVERT ARIA LABELS
 ```
 $('').a11y_aria_label(deep);
+```
+######UTILITY
+```
+$('').focusNoScroll();
 ```
   
   
   
 ##Style Quick Reference
-####HIDDEN BUT READABLE(FOCUSABLE) TEXT
+######HIDDEN BUT READABLE(FOCUSABLE) TEXT
 ```
 .aria-label
 ```
-
-####EXCLUDED
+######EXCLUDED
 ```
 .a11y-ignore
 .a11y-ignore-focus
 ````
-
-####INTERNALLY APPLIED
+######INTERNALLY APPLIED
 ```
 .aria-hidden
 .a11y-selected
@@ -141,8 +135,8 @@ $('').a11y_aria_label(deep);
   
   
   
-## Function descriptions  
-###TURN ON & UPDATE
+## Long Function descriptions  
+######TURN ON & UPDATE
 #### $.a11y()
 ```
 $.a11y(enabled, options);
@@ -170,7 +164,7 @@ Use this function when substantial page changes occur
 * Reattaches the focusguard element so that is the last in the document body
   
 
-###TOGGLE ACCESSIBILITY
+######TOGGLE ACCESSIBILITY
 #### $.a11y_on()
 ```
 $.a11y_on(isOn);
@@ -187,7 +181,7 @@ Use the above to toggle selection of tab indexes and aria-hidden on children
 * Ignores .a11y-ignore elements
   
   
-###MAKE ACCESSIBLE CONTROLS
+######MAKE ACCESSIBLE CONTROLS
 ####$('').a11y_cntrl()
 ```
 $('').a11y_cntrl(isOn, withDisabled);
@@ -200,7 +194,7 @@ Use the above to toggle accessibility of controls
 * $('selector').a11y_cntrl_enabled(isOn) is a shortcut for $('selector').a11y_cntrl(isOn, true) 
    
   
-###MAKE ACCESSIBLE TEXT
+######MAKE ACCESSIBLE TEXT
 ####$.a11y_normalize()
 ```
 $.a11y_normalize(text);
@@ -217,7 +211,7 @@ Use the above to make html/text string into tabbable html string
 * Ignores 'b, br, i, abbr, strong'  
 * Wraps text nodes in '&lt;span tabindex="0" role="region"&gt;&lt;/span&gt;' or adds [tabindex="0"][role="region"] to parent 
    
-#####Method
+Method:  
 1.  Converts string to ```<div>text</div>``` dom node  
 2.  Counts children, if no child dom nodes assume text and wrap in a tabbable span tag and return  
 3.  Count children style elements (b,i,strong,abbr), if only style elements wrap in a tabbable span tag and return  
@@ -236,7 +230,7 @@ $('').a11y_text();
 ```
 Use the above to make selection .innerHTML strings into tabbable html strings using $.a11y_text(.innerHTML) 
 
-###MAKE SELECTED
+######MAKE SELECTED
 ####$('').a11y_selected()
 ```
 $('').a11y_selected(isOn);
@@ -249,12 +243,12 @@ Use the above code to toggle element selection
 * For mac (if $.a11y.options.OS == "mac"), this will create a visibly hidden span tag for the screen reader and move focus to it.
 * Otherwise (if $.a11y.options.OS !== "mac"), this will create an 'aria-alert' in the #a11y-selected div to be read automatically by a screen reader (this does not work on mac voiceover for some reason).
   
-###FOCUS RESTRICTION
+######FOCUS RESTRICTION
 ####$('').a11y_only()
 ```
 $('').a11y_only(container, storeLastTabIndex);
 ```
-Use above to restrict tabbable / readable focus to selected elements (optionally using a container)
+Use above to restrict tabbable / readable focus to selected elements (optionally using a container)  
 * Will store element tabindexes if asked to for use with a11y_popdown
 * Will store the previous active element if asked to for use with a11y_popdown
 
@@ -263,7 +257,8 @@ Use above to restrict tabbable / readable focus to selected elements (optionally
 ```
 $('').a11y_popup(container);
 ```
-Use above to restrict tabbable / readable focus to selected elements (optionally using a container), undo with function below * Will store element tabindexes for use with a11y_popdown
+Use above to restrict tabbable / readable focus to selected elements (optionally using a container), undo with function below  
+* Will store element tabindexes for use with a11y_popdown
 * Will store the previous active element for use with a11y_popdown
 * Multi-layer compatible (popups within popups is ok)
 
@@ -276,7 +271,7 @@ Use above to relax a11y_popup restriction
 * Restores all tab indexes
   
    
-###SET FOCUS
+######SET FOCUS
 ```
 $.a11y_focus();
 $('').a11y_focus();
@@ -284,7 +279,7 @@ $('').a11y_focus();
 Use the above code to focus on the first tabbable element   
 * Focuses on first occurance of [tabindex='0']:visible:not(.disabled):not([tabindex='-1']):not(:disabled):not(.a11y-ignore-focus)  
   
-###CONVERT ARIA LABELS
+######CONVERT ARIA LABELS
 ```
 $('').a11y_aria_label(deep);
 ```
@@ -292,7 +287,7 @@ Use the above code to make aria-labels readable on a touchscreen
 * Applies to 'div[aria-label], span[aria-label]'  
 * Creates '&lt;a class="aria-label prevent-default" role="region" href="#"&gt;' as first child of selected  
 
-###UTILITY
+######UTILITY
 ####$('').focusNoScroll()
 ```
 $('').focusNoScroll();
