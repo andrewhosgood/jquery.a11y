@@ -272,6 +272,7 @@ Use above to relax a11y_popup restriction
   
    
 ######SET FOCUS
+####$.a11y_focus() & $('').a11y_focus()
 ```
 $.a11y_focus();
 $('').a11y_focus();
@@ -280,6 +281,7 @@ Use the above code to focus on the first tabbable element
 * Focuses on first occurance of [tabindex='0']:visible:not(.disabled):not([tabindex='-1']):not(:disabled):not(.a11y-ignore-focus)  
   
 ######CONVERT ARIA LABELS
+####$('').a11y_aria_label()
 ```
 $('').a11y_aria_label(deep);
 ```
@@ -295,9 +297,44 @@ $('').focusNoScroll();
 [Does exactly what it says on the tin](http://www.ronseal.co.uk/), focuses on an element but retains the current scroll position.
 
 
-##Style Descriptions
+##Long Style Descriptions
+######HIDDEN BUT READABLE(FOCUSABLE) TEXT
+####.aria-label
+Put this class on any tag to make the text inside incredibly small and transparent. This will allow it to be read by a screen reader but be virtually invisible to the eye. Add [tabindex="0"] to the tag to allow a desktop to focus on it.  
+Likewise, if a div or span tag has the attribute aria-label="text", this will automatically be removed into a floating tag with this class and .prevent-default. '&lt;a class="aria-label prevent-default" role="region" href="#"&gt;'text&lt;/a&gt;
   
+######EXCLUDED
+####.a11y-ignore
+Put this class on a tag so that a11y will ignore it for tabindex changes in a11y_only, a11y_popup and a11y_popdown.  
   
+####.a11y-ignore-focus
+Put this class on a tag so that a11y will ignore it if it is the first item in focus when using a11y_focus.  
   
-##Examples
+
+######INTERNALLY APPLIED
+####.aria-hidden
+Class applied to elements which have been specifically hidden to screen readers  
+  
+####.a11y-selected  
+Class applied to elements which have been selected with a11y_selected  
+  
+####.accessible-text-block  
+Put this class on any tag which may (in the future) require differing contrasts. This class is currently applied to all
+accessible text blocks created by a11y_text.
+  
+####.prevent-default  
+Put this class on any tag which should have no click behaviour. This class is applied to all accessible text blocks created by a11y_text and a11y_aria_label. This will prevent the default behaviour on click.    
+  
+#### \#a11y-focusguard  
+Style applied to the focusguard element which returns the user to the top of the document  
+  
+#### \#a11y-focusguard.touch  
+Style applied to the focusguard element which forces it to remain at the bottom of the document on touch screen devices. This is as any readable text is focusable when inview on a tablet using the screen reader's cursor.  
+
+#### \#a11y-focusguard.notouch
+Style applied to the focusguard element which forces it to be fixed to the bottom of the window on desktops. This is desktops tend to scroll to the bottom of the screen when the focus wraps around. This is sometimes not expected behaviour. 
+
+#### \#a11y-selected
+Style applied to the non-focusable element at the bottom of each page which facilitates selection alerts.
+
 
