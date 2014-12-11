@@ -1,10 +1,38 @@
 jquery.a11y
 ============
 
+#jQuery General Accessibility Plugin  
+The extension was created to enable a universal experience on various screen readers and devices, specifically between iPad+safari+voiceover and windows+ie+JAWS and NVDA. It was made to facilitate a better user experience with regards to web navigation, interaction and content.  
 
-JQuery General Accessibility Plugin  
+##Installation
+1. Add jquery.a11y.js to your html scripts.  
+2. Add jquery.a11y.css to your html stylesheets.  
+  
+  
+  
+##Intended user controls
 
-###Quick ref
+####PC + NVDA/JAWS, MAC + VOICEOVER  
+* tab = next  
+* shift+tab = previous  
+* enter/space = select  
+* escape = go to first focusable element  
+  
+####IPAD + VOICEOVER
+* swipt right = next  
+* swipt left = previous  
+* double tap = select  
+* two finger swipe up = go to first focusable element  
+
+####IPAD + VOICEOVER + KEYBOARD  
+* right = next  
+* left = previous  
+* up+down = select  
+* shift+home / fn+shift+left = go to first focusable element  
+  
+  
+  
+##Function Quick Reference
 ```
 TURN ON:  
 $.a11y(isOn, options);
@@ -49,8 +77,10 @@ CONVERT ARIA LABELS:
 $('').a11y_aria_label(deep);
 ````
   
-##Functional Descriptions
-###Styles (please include jquery.a11y.css in your stylesheets)
+  
+  
+##Style Quick Reference
+
 ####.aria-label
 ####.aria-hidden
 ####.a11y-ignore
@@ -62,9 +92,11 @@ $('').a11y_aria_label(deep);
 #### \#a11y-focusguard.touch
 #### \#a11y-focusguard.notouch
 #### \#a11y-selected
+  
+  
+  
+### Function descriptions  
 
-  
-  
 ```
 $.a11y(enabled, options);
 $.a11y.options = {
@@ -162,4 +194,11 @@ $.a11y_popdown()
 ```
 Use above to relax a11y_popup restriction  
   
-    
+  
+  
+##Style Descriptions
+  
+  
+  
+##Examples
+
