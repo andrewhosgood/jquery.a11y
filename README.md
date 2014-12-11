@@ -240,21 +240,32 @@ Use the above code to toggle element selection
 * For mac (if $.a11y.options.OS == "mac"), this will create a visibly hidden span tag for the screen reader and move focus to it.
 * Otherwise (if $.a11y.options.OS !== "mac"), this will create an 'aria-alert' in the #a11y-selected div to be read automatically by a screen reader (this does not work on mac voiceover for some reason).
   
-####FOCUS RESTRICTION
+###FOCUS RESTRICTION
+####$('').a11y_only()
 ```
-$('').a11y_only(container, );
-$('').a11y_popup();
+$('').a11y_only(container, storeLastTabIndex);
+```
+
+
+####$('').a11y_popup()
+```
+$('').a11y_popup(container);
+```
+
+####$.a11y_popdown()
+```
 $.a11y_popdown();
 ```
+
    
-####SET FOCUS
+###SET FOCUS
 ```
 $('').focusNoScroll();
 $.a11y_focus();
 $('').a11y_focus();
 ```
   
-####CONVERT ARIA LABELS
+###CONVERT ARIA LABELS
 ```
 $('').a11y_aria_label(deep);
 ```
