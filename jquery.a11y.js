@@ -283,6 +283,7 @@
     $.a11y.options = {
         focusOffsetTop: 0,
         focusOffsetBottom: 0,
+        animateDuration: 250,
         OS: "",
         isTouchDevice: false,
         isOn: false
@@ -425,12 +426,13 @@
         }
     };
 
-$(".c-127").a11y_only(".menu");
-
 //FOCUS RESTRICTION
 
     //ALLOWS FOCUS ON SELECTED ELEMENTS ONLY
     $.fn.a11y_only = function(container, storeLastTabIndex) {
+        if (storeLastTabIndex) {
+            $.a11y.focusStack.push($documentActiveElement);
+        }
         var $elements;
         if (container !== undefined) $elements = $(container).find(tabIndexElements).filter(tabIndexElementFilter);
         else $elements = $(tabIndexElements).filter(tabIndexElementFilter);
@@ -453,19 +455,16 @@ $(".c-127").a11y_only(".menu");
     };
 
     //ALLOWS RESTORATIVE FOCUS ON SELECTED ELEMENTS ONLY
-    $.fn.a11y_popup = function() {
+    $.fn.a11y_popup = function(container) {
 
-        $.a11y.focusStack.push($documentActiveElement);
-
-        this.a11y_only(undefined, true);
+        this.a11y_only(container, true);
 
         this.a11y_aria_label(true);
-        
-        //$.a11y_focus();
 
-        if (this.length > 0) scrollToFocus({target: this[0] });
+        if (this.length > 0) scrollToFocus( { target: this[0] });
 
         reattachFocusGuard();
+        
         return this;
     };
 
