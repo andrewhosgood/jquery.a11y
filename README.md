@@ -8,13 +8,14 @@ JQuery General Accessibility Plugin
 ```
 TURN ON:  
 $.a11y(isOn, options);
+$.a11y_update();
 
 OPTIONS:
 $.a11y.options = {
-	offsetTop: 0,
-	offsetBottom: 0,
-	animateDuration: 250,
+	focusOffsetTop: 0,
+	focusOffsetBottom: 0,
 	OS: "",
+	isTouchDevice: false,
 	isOn: false
 };
 
@@ -27,7 +28,7 @@ $('').a11y_cntrl(isOn, withDisabled);
 $('').a11y_cntrl_enabled(isOn);
 
 MAKE ACCESSIBLE TEXT:  
-$.a11y_normalize(text)
+$.a11y_normalize(text);
 $.a11y_text(text);
 $('').a11y_text();
 
@@ -35,7 +36,7 @@ MAKE SELECTED:
 $('').a11y_selected(isOn);
   
 FOCUS RESTRICTION:  
-$('').a11y_only();
+$('').a11y_only(container, );
 $('').a11y_popup();
 $.a11y_popdown();
   
@@ -48,24 +49,20 @@ CONVERT ARIA LABELS:
 $('').a11y_aria_label(deep);
 ````
   
-###Functional Descriptions
-  
-```
-<style id='a11y'>
-.aria-label {
-	position:absolute;
-	left:0px;
-	width:auto;
-	height:auto;
-	overflow:auto;
-	color: rgba(0,0,0,0) !important;
-	background: rgba(0,0,0,0) !important;
-	font-size: 1px !important;
-}
-</style>style>
+##Functional Descriptions
+###Styles (please include jquery.a11y.css in your stylesheets)
+####.aria-label
+####.aria-hidden
+####.a11y-ignore
+####.a11y-ignore-focus
+####.a11y-selected
+####.accessible-text-block
+####.prevent-default
+#### \#a11y-focusguard
+#### \#a11y-focusguard.touch
+#### \#a11y-focusguard.notouch
+#### \#a11y-selected
 
-```
-Adds above to document head  
   
   
 ```
