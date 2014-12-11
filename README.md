@@ -213,17 +213,17 @@ This function returns the text attribute having removed "& ... ;" style html cha
 $.a11y_text(text);
 ```
 Use the above to make html/text string into tabbable html string  
-1. Converts string to <div>text</div> dom node
-2. Counts children, if no child dom nodes assume text and wrap in a tabbable span tag and return
-3. Count children style elements (b,i,strong,abbr), if only style elements wrap in a tabbable span tag and return
-4. Go through each child element
-5. If text only node wrap in tabbable span tag and move to next child element
-6. If node is a style element or a natively tabbable element, ignore and move to next child element
-7. If has no children, make tabbable and move to next child element
-8. If have children, perform same procedure from 2. on child (recursively) and move to next child element
-9. Replace all original children with amended versions
-10. Return element and continue to 9. (for recursion) or procede to 11.
-11. Flatten children into an html string
+1.  Converts string to <div>text</div> dom node  
+2.  Counts children, if no child dom nodes assume text and wrap in a tabbable span tag and return  
+3.  Count children style elements (b,i,strong,abbr), if only style elements wrap in a tabbable span tag and return  
+4.  Go through each child element  
+5.  If text only node wrap in tabbable span tag and move to next child element  
+6.  If node is a style element or a natively tabbable element, ignore and move to next child element  
+7.  If has no children, make tabbable and move to next child element  
+8.  If have children, perform same procedure from 2. on child (recursively) and move to next child element  
+9.  Replace all original children with amended versions  
+10.  Return element and continue to 9. (for recursion) or procede to 11.  
+11.  Flatten children into an html string  
   
 ####$('').a11y_text();
 ```
