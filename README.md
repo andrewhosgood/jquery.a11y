@@ -16,6 +16,28 @@ This plugin can be considered an accessibility boiler-plate for a web applicatio
 * [bowserjs](http://www.bowserjs.org/) for browser detection (required for mac osx selection alerts)
 * [modernizr](http://modernizr.com/) for touch detection (required for returning focus to top of page)
   
+##Suggest companion usage
+```
+    var OS = Bowser.osversion;
+    // Bowser only checks against navigator.userAgent so if the OS is undefined, do a check on the navigator.platform
+    if (OS == undefined) OS = getPlatform();
+    function getPlatform() {
+
+        var platform = navigator.platform;
+
+        if (platform.indexOf("Win") != -1) {
+            return "Windows";
+        }
+        else if (platform.indexOf("Mac") != -1) {
+            return "Mac";
+        }
+        else if (platform.indexOf("Linux") != -1) {
+            return "Linux";
+        }
+    }
+    $.a11y.options.OS = OS.toLowerCase();
+    $.a11y.options.isTouchDevice = Modernizr.touch;
+```
   
   
 ##Usage Example
