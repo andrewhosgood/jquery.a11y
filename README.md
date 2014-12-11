@@ -116,37 +116,140 @@ $('').a11y_aria_label(deep);
   
   
 ##Style Quick Reference
+####HIDDEN BUT READABLE(FOCUSABLE) TEXT
+```
+.aria-label
+```
 
-####.aria-label
-####.aria-hidden
-####.a11y-ignore
-####.a11y-ignore-focus
-####.a11y-selected
-####.accessible-text-block
-####.prevent-default
-#### \#a11y-focusguard
-#### \#a11y-focusguard.touch
-#### \#a11y-focusguard.notouch
-#### \#a11y-selected
-  
-  
-  
-### Function descriptions  
+####EXCLUDED
+```
+.a11y-ignore
+.a11y-ignore-focus
+````
 
+####INTERNALLY APPLIED
+```
+.aria-hidden
+.a11y-selected
+.accessible-text-block
+.prevent-default
+#a11y-focusguard
+#a11y-focusguard.touch
+#a11y-focusguard.notouch
+#a11y-selected
+```
+  
+  
+  
+## Function descriptions  
+###TURN ON & UPDATE
+#### $.a11y()
 ```
 $.a11y(enabled, options);
 $.a11y.options = {
-	offsetTop: 0,
-	offsetBottom: 0,
-	animateDuration: 250
+	focusOffsetTop: 0,
+	focusOffsetBottom: 0,
+	OS: "",
+	isTouchDevice: false,
+	isOn: false
 };
 ```
 Use the above code to turn on accessibilty.  
-* Hides everything with '.not-accessible' by adding tabindex="-1" aria-hidden="true"  
+* Catures space and enter key to force them both as selection keys  
 * Redirects '.prevent-default' clicks to event.preventDefault();  
-* Animates scrolls for '[tabindex="0"]' focuses (offsetTop and offsetBottom ensure visibility)  
-* Appends focusguard to body to capture end of page focus  
-* Redirects body clicks to last element with focus  
+* Controls scrolls for '[tabindex="0"]' focuses (focusOffsetTop and focusOffsetBottom ensure visibility)   
+* Appends focusguard element to body to capture end of page focus  
+* Appends selected element to body to enable alerts for selections
+* Performs $.a11y_update();
+  
+#### $.a11y_update();
+Use this function when substantial page changes occur
+* Hides everything with '.not-accessible' by adding tabindex="-1", aria-hidden="true"  and .aria-hidden  
+* Focuses upon the #a11y-selected element
+* Converts div and span aria-labels to prepended span tags  
+* Reattaches the focusguard element so that is the last in the document body
+  
+
+###TOGGLE ACCESSIBILITY
+#### $.a11y_on()
+```
+$.a11y_on(isOn);
+```
+Use this function to toggle a screen reader's ablility to read anything in the body tag
+* Applies aria-hidden to the body tag
+  
+#### $('').a11y_on()
+```
+$('').a11y_on(isOn);
+```
+Use the above to toggle selection of tab indexes and aria-hidden on children  
+* Performs a11y_cntrl(enabled, false) on all focusable elements in selector
+* Ignores .a11y-ignore elements
+  
+  
+###MAKE ACCESSIBLE CONTROLS
+```
+$('').a11y_cntrl(isOn, withDisabled);
+$('').a11y_cntrl_enabled(isOn);
+```
+  
+####MAKE ACCESSIBLE TEXT
+```
+$.a11y_normalize(text);
+$.a11y_text(text);
+$('').a11y_text();
+```
+  
+####MAKE SELECTED
+```
+$('').a11y_selected(isOn);
+```
+  
+####FOCUS RESTRICTION
+```
+$('').a11y_only(container, );
+$('').a11y_popup();
+$.a11y_popdown();
+```
+   
+####SET FOCUS
+```
+$('').focusNoScroll();
+$.a11y_focus();
+$('').a11y_focus();
+```
+  
+####CONVERT ARIA LABELS
+```
+$('').a11y_aria_label(deep);
+```
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
 
@@ -179,15 +282,7 @@ Use the above to toggle selection of controls
 * $('selector').a11y_cntrl_enabled(isOn) is a shortcut for $('selector').a11y_cntrl(isOn, true) 
   
   
-```
-$('selector').a11y_on(isOn)
-```
-Use the above to toggle selection of tab indexes on children  
-* Performs a11y_cntrl(enabled) on all focusable elements in selector
-  
-  
-  
-  
+
   
 ```
 $.a11y_text(text)
