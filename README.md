@@ -255,20 +255,25 @@ Use the above code to toggle element selection
 $('').a11y_only(container, storeLastTabIndex);
 ```
 Use above to restrict tabbable / readable focus to selected elements (optionally using a container)
-* Will store element tabindex if asked to for use with a11y_popdown
+* Will store element tabindexes if asked to for use with a11y_popdown
+* Will store the previous active element if asked to for use with a11y_popdown
 
 
 ####$('').a11y_popup()
 ```
 $('').a11y_popup(container);
 ```
-Use above to restrict tabbable / readable focus to selected elements (optionally using a container), undo with function below  
+Use above to restrict tabbable / readable focus to selected elements (optionally using a container), undo with function below * Will store element tabindexes for use with a11y_popdown
+* Will store the previous active element for use with a11y_popdown
+* Multi-layer compatible (popups within popups is ok)
 
 ####$.a11y_popdown()
 ```
 $.a11y_popdown();
 ```
 Use above to relax a11y_popup restriction  
+* Restores previous active element
+* Restores all tab indexes
   
    
 ###SET FOCUS
@@ -292,7 +297,7 @@ Use the above code to make aria-labels readable on a touchscreen
 ```
 $('').focusNoScroll();
 ```
-[Ronseal](http://www.ronseal.co.uk/)
+[Does exactly what it says on the tin](http://www.ronseal.co.uk/), focuses on an element but retains the current scroll position.
 
 
 ##Style Descriptions
