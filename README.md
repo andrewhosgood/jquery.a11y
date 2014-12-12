@@ -50,6 +50,23 @@ $('controls to disable').a11y_cntrl_enable(false); // disable certain controls
 $('element to popup').popup(); // create a popup and restrict tabbing to it
 $.popdown(); // close popup and relax tabbing
 $.a11y_focus(); // focus on the first tabbable element
+
+<a href="#" class="aria-label prevent-default accessible-text-block">Read this text</div> 
+//makes a hidden, readable(focusable) text block
+
+<div aria-label="Read this text"></div> 
+//makes a hidden, readable(focusable) text block
+
+<input type="button" role="button" aria-label="Read this text" title="Read this text" aria-labelledby="label1" id="input1" />
+<label for="input1" id="label1">Read this text</label>
+//makes button with a universally readable label
+
+<div tabindex="-1" aria-hidden="true"></div> 
+//hides parent and children from screen reader
+
+<div tabindex="0" role="region">Read this text</div> 
+//Creates a visible, readable(focusable) text block
+
 ```
   
   
