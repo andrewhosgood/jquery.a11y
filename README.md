@@ -7,6 +7,7 @@ This plugin can be considered an accessibility boiler-plate for a web applicatio
 
 
 ##Installation
+0. Built with jQuery 1.10.2 using $.fn.[func], $.[func], $('').on and $('').trigger syntax  
 1. Add jquery.a11y.js to your html scripts.  
 2. Add jquery.a11y.css to your html stylesheets.  
     
