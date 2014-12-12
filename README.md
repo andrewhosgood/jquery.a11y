@@ -67,6 +67,12 @@ $.a11y_focus(); // focus on the first tabbable element
 <div tabindex="0" role="region">Read this text</div> 
 //Creates a visible, readable(focusable) text block
 
+<div aria-expanded="false"></div> 
+//Reads hidden children
+
+<div aria-expanded="true"></div> 
+//Reads shown children
+
 ```
   
   
