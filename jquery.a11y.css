@@ -11,6 +11,7 @@
     font-size: 1px !important;
     padding:0 !important;
     margin:0 !important;
+    line-height: normal !important;
 }
 
     /*FORCE ARIA-LABELS TO HIDE ON HIDDEN*/
@@ -31,6 +32,7 @@
     font-size: 1px !important;
     padding:0 !important;
     margin:0 !important;
+    line-height: normal !important;
 }
 
     /*IPAD: Stop accessibility cursor focusing until end of page;*/
@@ -57,4 +59,22 @@
     font-size: 1px !important;
     padding:0 !important;
     margin:0 !important;
+    line-height: normal !important;
+}
+
+/*FOCUS DISTRACTION*/
+#a11y-focuser {
+    position:fixed !important;
+    left:0px !important;
+    top:0px !important;
+    width:auto !important;
+    height:auto !important;
+    overflow:auto !important;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"; /*IE8*/
+    color: rgba(0,0,0,0) !important;
+    background: rgba(0,0,0,0) !important;
+    font-size: 1px !important;
+    padding:0 !important;
+    margin:0 !important;
+    line-height: normal !important;
 }

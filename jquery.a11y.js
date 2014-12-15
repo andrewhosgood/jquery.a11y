@@ -1,11 +1,13 @@
 (function($, window, undefined) {
 
+    var nativeSpaceElements = "textarea, text";
+    var nativeEnterElements = "textarea, a, button, input[type='checkbox']";
     var ignoreElements = "a,button,input,select,textarea";
     var styleElements = "b,br,i,abbr,strong";
     var tabIndexElements = 'a,button,input,select,textarea,[tabindex]';
     var tabIndexElementFilter = ':not(.a11y-ignore)';
     var focusableElementsFilter = ":visible:not(.disabled):not([tabindex='-1']):not(:disabled):not(.a11y-ignore-focus)";
-    var focusableElements = "[tabindex='0']"+focusableElementsFilter;
+    var focusableElements = "a,button,input,select,textarea,[tabindex]";
     var ariaLabelElements = "div[aria-label], span[aria-label]";
 
 
@@ -29,6 +31,7 @@
 
     //CHECK IF ELEMENT HAS FIX POSITION
     var isFixedPosition = function(element) {
+        if ($(element).css("position") == "fixed") return true;
         var parents = $(element).parents();
         for (var i = 0; i < parents.length; i++) {
             if ($(parents[i]).css("position") == "fixed") return true;
@@ -75,6 +78,17 @@
     //CAPTURE ESCAPE
     var keyUp = function(event) {
         switch (event.which) {
+        case 32:
+            //CAPTURE SPACE
+            if ($(event.target).is(nativeSpaceElements)) return;
+
+            //STOP SPACE FROM SCROLLING / SELECTING
+            event.preventDefault();
+            event.stopPropagation();
+            //TURN SPACE INTO CLICK
+            $(event.target).trigger("click");
+            break;
+        //CAPTURE ENTER
         case 27: //ESCAPE KEY
             $.a11y_focus();
             break;
@@ -86,20 +100,15 @@
         switch (event.which) {
         //CAPTURE SPACE
         case 32:
-            switch (event.target.tagName.toLowerCase()) {
-            case "textarea": case "text":
-                break;
-            default: 
-                //STOP SPACE FROM SCROLLING / SELECTING
-                event.preventDefault();
-                event.stopPropagation();
-                //TURN SPACE INTO CLICK
-                $(event.target).trigger("click");
-                return;
-            }
+            if ($(event.target).is(nativeSpaceElements)) return;
+
+            //STOP SPACE FROM SCROLLING / SELECTING
+            event.preventDefault();
+            event.stopPropagation();
+            break;
         //CAPTURE ENTER
         case 13:
-            if ($(event.target).is(tabIndexElements)) return;
+            if ($(event.target).is(nativeEnterElements)) return;
             //STOP SPACE FROM SCROLLING / SELECTING
             event.preventDefault();
             event.stopPropagation();
@@ -232,9 +241,14 @@
 
 
     var focusOrNext = function($element) {
-        if(!$element.is(focusableElementsFilter)) $element = $element.next(focusableElements);
+        if(!$element.is(focusableElementsFilter)) $element = $($element.nextAll(focusableElements).filter(focusableElementsFilter)[0]);
+        $("#a11y-focuser").focusNoScroll();
         $element.focusNoScroll();
     };
+
+    $(window)
+    .on("keyup", keyUp)
+    .on("keydown", keyDown);
 
     //TURN ON ACCESSIBILITY FEATURES
     $.a11y = function(isOn, options) {
@@ -250,21 +264,15 @@
                 //ADDS TAB GUARD, CLICK ON ACCESSIBLE TEXT AND SCROLL TO FOCUS EVENT HANDLERS
                 var touchClass = $.a11y.options.isTouchDevice ? "touch" : "notouch";
 
-                $(window)
-                .on("keyup", keyUp)
-                .on("keydown", keyDown);
-
                 $("body")
                 .on("click", ".prevent-default", preventDefault)
                 .on("focus", tabIndexElements, scrollToFocus)
 
                 if ($("#a11y-focusguard").length === 0) $('body').append($('<a id="a11y-focusguard" class="a11y-ignore a11y-ignore-focus" tabindex="0" role="button"></a>').addClass(touchClass))
-                if ($("#a11y-selected").length === 0) $('body').append($('<a id="a11y-selected" href="#" role="alert" class="prevent-default a11y-ignore" tabindex="-1">'))
+                if ($("#a11y-selected").length === 0) $('body').append($('<a id="a11y-selected" href="#" class="prevent-default a11y-ignore" tabindex="-1">'))
+                if ($("#a11y-focuser").length === 0) $('body').append($('<a id="a11y-focuser" href="#" class="prevent-default a11y-ignore" tabindex="-1">'))
             } else {
                 //REMOVES TAB GUARD, CLICK ON ACCESSIBLE TEXT AND SCROLL TO FOCUS EVENT HANDLERS
-                $(window)
-                .off("keyup", keyUp)
-                .off("keydown", keyDown);
 
                 $("body")
                 .off("click", ".prevent-default", preventDefault)
@@ -272,6 +280,7 @@
 
                 $('#a11y-focusguard').remove();
                 $('#ally-selected').remove();
+                $('#ally-focuser').remove();
 
             }
         }
@@ -301,7 +310,7 @@
 
         if ($.a11y.isOn) {
 
-            $("#a11y-selected").focusNoScroll();
+            //$("#a11y-selected").focusNoScroll();
             $("body").a11y_aria_label(true);
             //ADDS TAB GUARG EVENT HANDLER
             reattachFocusGuard();
@@ -426,6 +435,23 @@
         }
     };
 
+    $.a11y_alert = function(text) {
+        if (!$.a11y.isOn) return this;
+        //var textNode = document.createTextNode(text);
+        var $alert = $('<div role="alert" aria-label="'+text+'">');
+
+        $($.a11y).trigger("reading", text);
+        //$alert[0].appendChild(textNode);
+        $("#a11y-selected").append($alert).attr("role","alert");
+        
+        $alert.css("visibility","hidden");
+        $alert.css("visibility","visible");
+        setTimeout(function() {
+            $alert.remove();
+        }, 20000)
+    };
+
+
 //FOCUS RESTRICTION
 
     //ALLOWS FOCUS ON SELECTED ELEMENTS ONLY
@@ -501,14 +527,14 @@
     $.a11y_focus = function(dontDefer) {
         //IF HAS ACCESSIBILITY, FOCUS ON FIRST VISIBLE TAB INDEX
         if (dontDefer) {
-            var tags = $(focusableElements);
+            var tags = $(focusableElements).filter(focusableElementsFilter);
             if (tags.length > 0) {
                 focusOrNext($(tags[0]));
             }
             return true;
         }
         defer(function(){
-            var tags = $(focusableElements);
+            var tags = $(focusableElements).filter(focusableElementsFilter);
             if (tags.length > 0) {
                 focusOrNext($(tags[0]));
             }
@@ -526,7 +552,7 @@
             if ($this.is(focusableElements)) {
                 focusOrNext($this);
             } else {
-                var tags = $this.find(focusableElements);
+                var tags = $this.find(focusableElements).filter(focusableElementsFilter);
                 focusOrNext($(tags[0]));
             }
         }, this);
