@@ -1,6 +1,6 @@
 (function($, window, undefined) {
 
-    var nativeSpaceElements = "textarea, text";
+    var nativeSpaceElements = "textarea, input[type='text']";
     var nativeEnterElements = "textarea, a, button, input[type='checkbox']";
     var ignoreElements = "a,button,input,select,textarea";
     var styleElements = "b,br,i,abbr,strong";
