@@ -23,6 +23,16 @@
         },0);
     };
 
+    if (!String.prototype.trim) { //IE8 Fix
+      (function() {
+        // Make sure we trim BOM and NBSP
+        var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+        String.prototype.trim = function() {
+          return this.replace(rtrim, '');
+        };
+      })();
+    }
+
     //PREVENT DEFAULT CLICK ACTION FUNCTION
     var preventDefault = function(event) {
         event.preventDefault();
