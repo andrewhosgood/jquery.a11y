@@ -3,7 +3,7 @@ jquery.a11y - jQuery General Accessibility Plugin
 
 The extension was created to enable a universal experience on various screen readers and devices, specifically between iPad+safari+voiceover and windows+ie+JAWS and NVDA. It was made to facilitate a better user experience with regards to web navigation, interaction and content.  
   
-This plugin can be considered an accessibility boiler-plate for a web application. I will help provide the right focus to a screen reader's cursor for controls, content and enable you to create interaction description blocks.
+This plugin can be considered an accessibility boiler-plate for a web application's accessibility needs. This plugin will help provide the right focus to a screen reader's cursor for controls and content whilst also enabling you to create screen readable interaction descriptions.
 
 
 ##Installation
