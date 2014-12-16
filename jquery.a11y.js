@@ -13,6 +13,15 @@
 
     var $documentActiveElement;
 
+    if (!String.prototype.trim) { //IE8 Fix
+      (function() {
+        // Make sure we trim BOM and NBSP
+        var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+        String.prototype.trim = function() {
+          return this.replace(rtrim, '');
+        };
+      })();
+    }
 
     //_.defer(_.bind(func, that)) EQUIVALENT
     var defer = function(func, that) {
