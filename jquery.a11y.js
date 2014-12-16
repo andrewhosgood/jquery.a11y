@@ -256,7 +256,7 @@
         $element.focusNoScroll();
     };
 
-    $(window)
+    $('body')
     .on("keyup", keyUp)
     .on("keydown", keyDown);
 
