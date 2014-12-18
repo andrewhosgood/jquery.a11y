@@ -171,6 +171,7 @@ $('').focusNoScroll();
 ```
 .accessible-text-block
 .prevent-default
+.a11y-hideable
 ```
 ######INTERNALLY APPLIED
 ```
@@ -367,6 +368,9 @@ Put this class on any tag which should have no click behaviour. This class is ap
 ####.accessible-text-block  
 Put this class on any tag which may (in the future) require differing contrasts. This class is currently applied to all
 accessible text blocks created by a11y_text.
+  
+####.a11y-hideable  
+Put this class on any tag that is not normally in the tab index but should be explicitly removed from it on popups. Such as youtube iframe tags.
 
 
 ######INTERNALLY APPLIED
