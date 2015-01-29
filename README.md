@@ -182,6 +182,7 @@ $('').focusNoScroll();
 #a11y-focusguard.touch
 #a11y-focusguard.notouch
 #a11y-selected
+#a11y-focuser
 ```
   
   
@@ -395,4 +396,5 @@ Style applied to the focusguard element which forces it to be fixed to the botto
 #### \#a11y-selected
 Style applied to the non-focusable element at the bottom of each page which facilitates selection alerts.
 
-
+#### \#a11y-focuser
+Style applied to a div which allow focus to be temporarily redirected, hopefully forcing the screen reader to read it.
