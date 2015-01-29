@@ -166,6 +166,7 @@ $('').focusNoScroll();
 ```
 .a11y-ignore
 .a11y-ignore-focus
+.a11y-ignore-aria
 ````
 ######SPECIAL CLASSES
 ```
@@ -359,7 +360,9 @@ Put this class on a tag so that a11y will ignore it for tabindex changes in a11y
   
 ####.a11y-ignore-focus
 Put this class on a tag so that a11y will ignore it if it is the first item in focus when using a11y_focus.  
-  
+
+####.a11y-ignore-aria
+Put this class on a tag so that a11y will not change the aria-labels on a11y_aria_label calls
   
 ######SPECIAL CLASSES
 ####.prevent-default  
