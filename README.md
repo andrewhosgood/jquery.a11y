@@ -158,10 +158,6 @@ $('').focusNoScroll();
   
   
 ##Style Quick Reference
-######HIDDEN BUT READABLE(FOCUSABLE) TEXT
-```
-.aria-label
-```
 ######EXCLUDED
 ```
 .a11y-ignore
@@ -170,6 +166,7 @@ $('').focusNoScroll();
 ````
 ######SPECIAL CLASSES
 ```
+.aria-label
 .accessible-text-block
 .prevent-default
 .a11y-hideable
@@ -350,11 +347,6 @@ $('').focusNoScroll();
 
 
 ##Long Style Descriptions
-######HIDDEN BUT READABLE(FOCUSABLE) TEXT
-####.aria-label
-Put this class on any tag to make the text inside incredibly small and transparent. This will allow it to be read by a screen reader but be virtually invisible to the eye. Add [tabindex="0"] to the tag to allow a desktop to focus on it.  
-Likewise, if a div or span tag has the attribute aria-label="text", this will automatically be removed into a floating tag with this class and .prevent-default. '&lt;a class="aria-label prevent-default" role="region" href="#"&gt;'text&lt;/a&gt;
-  
 ######EXCLUDED
 ####.a11y-ignore
 Put this class on a tag so that a11y will ignore it for tabindex changes in a11y_only, a11y_popup and a11y_popdown.  
@@ -366,6 +358,10 @@ Put this class on a tag so that a11y will ignore it if it is the first item in f
 Put this class on a tag so that a11y will not change the aria-labels on a11y_aria_label calls
   
 ######SPECIAL CLASSES
+####.aria-label
+Put this class on any tag to make the text inside incredibly small and transparent. This will allow it to be read by a screen reader but be virtually invisible to the eye. Add [tabindex="0"] to the tag to allow a desktop to focus on it.  
+Likewise, if a div or span tag has the attribute aria-label="text", this will automatically be removed into a floating tag with this class and .prevent-default. '&lt;a class="aria-label prevent-default" role="region" href="#"&gt;'text&lt;/a&gt;
+
 ####.prevent-default  
 Put this class on any tag which should have no click behaviour. This class is applied to all accessible text blocks created by a11y_text and a11y_aria_label. This will prevent the default behaviour on click.    
   
