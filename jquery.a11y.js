@@ -12,8 +12,11 @@
     var ariaLabelElements = "div[aria-label], span[aria-label]";
     var ariaLabelElementsFilter = ":not( .a11y-ignore-aria [aria-label] )";
 
-
     var $documentActiveElement;
+    
+    $('body').on("mousedown", focusableElements, function(event) { //IPAD TOUCH-DOWN FOCUS FIX FOR BUTTONS
+        $documentActiveElement = $(event.currentTarget);
+    });
 
     if (!String.prototype.trim) { //IE8 Fix
       (function() {
