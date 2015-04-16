@@ -11,12 +11,10 @@
     var hideableElements = ".a11y-hideable";
     var ariaLabelElements = "div[aria-label], span[aria-label]";
     var ariaLabelElementsFilter = ":not( .a11y-ignore-aria [aria-label] )";
+    var parentsFilter = ":not(#wrapper):not(body)";
+
 
     var $documentActiveElement;
-    
-    $('body').on("mousedown", focusableElements, function(event) { //IPAD TOUCH-DOWN FOCUS FIX FOR BUTTONS
-        $documentActiveElement = $(event.currentTarget);
-    });
 
     if (!String.prototype.trim) { //IE8 Fix
       (function() {
@@ -57,9 +55,10 @@
     var scrollToFocus = function(event) {
         $documentActiveElement = $(event.target);
 
-        if ($.a11y.options.isOn === false && !$documentActiveElement.is("#a11y-selected")) $("#a11y-selected").focusNoScroll();
-        //console.log ("Focused on:")
-        //console.log($documentActiveElement);
+        if ($.a11y.options.isOn === false && !$documentActiveElement.is("#a11y-focuser")) $("#a11y-focuser").focusNoScroll();
+        console.log ("Focused on:")
+        console.log($documentActiveElement);
+
         var readText;
         if ($(event.target).attr("aria-labelledby")) {
             var label = $("#"+$(event.target).attr("aria-labelledby"));
@@ -129,6 +128,29 @@
             //TURN SPACE INTO CLICK
             $(event.target).trigger("click");
         }
+    };
+
+    //IPAD TOUCH-DOWN FOCUS FIX FOR BUTTONS
+    var captureActiveElementOnClick =  function(event) {
+        $documentActiveElement = $(event.currentTarget);
+        if ($documentActiveElement.is(nativeEnterElements)) {
+            //Capture that the user has interacted with a native form element
+            $.a11y.userInteracted = true;
+        }
+    };
+
+    //INFORM ABOUT USER INTERACTION
+    var captureInitialScroll = function() {
+        setTimeout(function() {
+            $(window).one("scroll", function() {
+                $.a11y.userInteracted = true;
+            });
+        }, 500);
+    };
+
+    var setupInteractionListeners = function() {
+        $('body').on("mousedown", focusableElements, captureActiveElementOnClick);
+        captureInitialScroll();
     };
 
     //MAKES AN ELEMENT TABBABLE
@@ -315,6 +337,7 @@
     };
     $.a11y.focusStack = [];
 
+    $.a11y.ready = setupInteractionListeners;
 
     //REAPPLY ON SIGNIFICANT VIEW CHANGES
     $.a11y_update = function() {
@@ -331,17 +354,19 @@
             //ADDS TAB GUARG EVENT HANDLER
             reattachFocusGuard();
         }
+
     };
 
 //TOGGLE ACCESSIBILITY
     //MAKES CHILDREN ACCESSIBLE OR NOT
-    $.a11y_on = function(isOn) {
+    $.a11y_on = function(isOn, selector) {
+        selector = selector || 'body';
         isOn = isOn === undefined ? true : isOn;
         if (isOn === false) {
-            $('body').attr("aria-hidden", true);
+            $(selector).attr("aria-hidden", true);
             $.a11y.options.isOn = false;
         } else {
-            $('body').removeAttr("aria-hidden");
+            $(selector).removeAttr("aria-hidden");
             $.a11y.options.isOn = true;
         }
     };
@@ -367,14 +392,14 @@
         for (var i = 0; i < this.length; i++) {
             var $item = $(this[i]);
             if (enabled && $item.is(hideableElements)) {
-                $item.removeAttr("aria-hidden").removeClass("aria-hidden").parents().removeAttr("aria-hidden").removeClass("aria-hidden");
+                $item.removeAttr("aria-hidden").removeClass("aria-hidden").parents(parentsFilter).removeAttr("aria-hidden").removeClass("aria-hidden");
                 if (withDisabled) {
                     $item.removeAttr("disabled").removeClass("disabled");
                 }
             } else if (enabled) {
                 $item.attr({
                     tabindex: "0",
-                }).removeAttr("aria-hidden").removeClass("aria-hidden").parents().removeAttr("aria-hidden").removeClass("aria-hidden");
+                }).removeAttr("aria-hidden").removeClass("aria-hidden").parents(parentsFilter).removeAttr("aria-hidden").removeClass("aria-hidden");
                 if (withDisabled) {
                     $item.removeAttr("disabled").removeClass("disabled");
                 }
@@ -531,8 +556,8 @@
 
         this.find(tabIndexElements).filter(tabIndexElementFilter).attr({
             'tabindex': 0
-        }).removeAttr('aria-hidden').removeClass("aria-hidden").parents().removeAttr('aria-hidden').removeClass("aria-hidden");
-        this.find(hideableElements).filter(tabIndexElementFilter).removeAttr("tabindex").removeAttr('aria-hidden').removeClass("aria-hidden").parents().removeAttr('aria-hidden').removeClass("aria-hidden");        
+        }).removeAttr('aria-hidden').removeClass("aria-hidden").parents(parentsFilter).removeAttr('aria-hidden').removeClass("aria-hidden");
+        this.find(hideableElements).filter(tabIndexElementFilter).removeAttr("tabindex").removeAttr('aria-hidden').removeClass("aria-hidden").parents(parentsFilter).removeAttr('aria-hidden').removeClass("aria-hidden");        
 
         return this;
     };
