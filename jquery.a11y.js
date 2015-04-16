@@ -56,8 +56,8 @@
         $documentActiveElement = $(event.target);
 
         if ($.a11y.options.isOn === false && !$documentActiveElement.is("#a11y-focuser")) $("#a11y-focuser").focusNoScroll();
-        console.log ("Focused on:")
-        console.log($documentActiveElement);
+        //console.log ("Focused on:")
+        //console.log($documentActiveElement);
 
         var readText;
         if ($(event.target).attr("aria-labelledby")) {
