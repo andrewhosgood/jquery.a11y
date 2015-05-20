@@ -217,8 +217,10 @@
             var cloneChild = $(child.outerHTML)[0];
             switch(child.nodeType) {
             case 3: //TEXT NODE
+                // preserve whitespace in ie8 by adding initial zero-width space
+                var childContent = child.textContent || "&#8203;" + child.nodeValue;
                 //IF TEXT NODE WRAP IN A TABBABLE SPAn
-                newChildren.push( makeTabbable($("<span>"+child.nodeValue+"</span>")) );
+                newChildren.push( makeTabbable($("<span>"+childContent+"</span>")) );
                 added = true;
                 break;
             case 1: //DOM NODE
