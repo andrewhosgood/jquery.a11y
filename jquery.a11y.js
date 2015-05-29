@@ -2,6 +2,7 @@
 
     var nativeSpaceElements = "textarea, input[type='text']";
     var nativeEnterElements = "textarea, a, button, input[type='checkbox']";
+    var nativeTabElements = "textarea, input, select";
     var ignoreElements = "a,button,input,select,textarea,br";
     var styleElements = "b,i,abbr,strong";
     var tabIndexElements = 'a,button,input,select,textarea,[tabindex]';
@@ -133,19 +134,10 @@
     //IPAD TOUCH-DOWN FOCUS FIX FOR BUTTONS
     var captureActiveElementOnClick =  function(event) {
         $documentActiveElement = $(event.currentTarget);
-        if ($documentActiveElement.is(nativeEnterElements)) {
+        if ($documentActiveElement.is(nativeTabElements)) {
             //Capture that the user has interacted with a native form element
             $.a11y.userInteracted = true;
         }
-    };
-
-    //INFORM ABOUT USER INTERACTION
-    var captureInitialScroll = function() {
-        setTimeout(function() {
-            $(window).one("scroll", function() {
-                $.a11y.userInteracted = true;
-            });
-        }, 500);
     };
 
     var setupInteractionListeners = function() {
