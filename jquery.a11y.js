@@ -142,7 +142,6 @@
 
     var setupInteractionListeners = function() {
         $('body').on("mousedown", focusableElements, captureActiveElementOnClick);
-        captureInitialScroll();
     };
 
     //MAKES AN ELEMENT TABBABLE
@@ -671,7 +670,6 @@
 //CONVERT ARIA LABELS
     //TURNS aria-label ATTRIBUTES INTO SPAN TAGS
     $.fn.a11y_aria_label = function(deep) {
-        if (!$.a11y.isOn) return this;
         var ariaLabels = [];
 
         for (var i = 0; i < this.length; i++) {
