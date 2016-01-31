@@ -20,7 +20,7 @@
             "nativeEnterElements": "textarea, a, button, input[type='checkbox'], input[type='radio']",
             "nativeTabElements": "textarea, input, select",
             "wrapIgnoreElements": "a,button,input,select,textarea,br",
-            "wrapStyleElements": "b,i,abbr,strong",
+            "wrapStyleElements": "b,i,abbr",
             "globalTabIndexElements": 'a,button,input,select,textarea,[tabindex]',
             "focusableElements": "a,button,input,select,textarea,[tabindex]",
             "focusableElementsAccessible": ":not(a,button,input,select,textarea)[tabindex]",
