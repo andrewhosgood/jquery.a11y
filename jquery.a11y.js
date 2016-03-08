@@ -7,7 +7,7 @@
             "globalTabIndexElementFilter": ':not(.a11y-ignore)',
             "focusableElementsFilter": ":visible:not(.disabled):not([tabindex='-1']):not(:disabled):not(.a11y-ignore-focus)",
             "ariaLabelElementsFilter": ":not( .a11y-ignore-aria [aria-label] )",
-            "ariaHiddenParentsFilter": ":not(#wrapper):not(body)",
+            "ariaHiddenParentsFilter": ":not(#wrapper):not(body)"
         };
 
     // JQUERY SELECTORS
@@ -25,7 +25,7 @@
             "focusableElements": "a,button,input,select,textarea,[tabindex]",
             "focusableElementsAccessible": ":not(a,button,input,select,textarea)[tabindex]",
             "hideableElements": ".a11y-hideable",
-            "ariaLabelElements": "div[aria-label], span[aria-label]",
+            "ariaLabelElements": "div[aria-label], span[aria-label]"
         };
 
     // JQUERY INJECTED ELEMENTS
@@ -99,7 +99,7 @@
         function getScrollingParent(event) {
             var $element = $(event.target);
 
-            var isTouchEvent = event.type == "touchmove";
+            var isTouchEvent = event.type === "touchmove";
 
             var deltaY; 
             var directionY;
@@ -269,7 +269,7 @@
                 function makeElementTabbable($element) {
                     $element.attr({
                         "role": "region",
-                        "tabindex": 0,
+                        "tabindex": 0
                     }).addClass("prevent-default").addClass("accessible-text-block");
                     return $element;
                 }
@@ -507,22 +507,22 @@
     // PRIVATE $.a11y FUNCTIONS
         function a11y_setupScrollListeners() {
             var scrollEventName = "wheel mousewheel";
-            $(window).on(scrollEventName, preventScroll);
-            $(document).on(scrollEventName, preventScroll);
-            $(window).on("touchstart", onScrollStartCapture); // mobile
-            $(window).on("touchmove", preventScroll); // mobile
-            $(window).on("touchend", onScrollEndCapture); // mobile
-            $(document).on("keydown", preventScrollKeys);
+            $(document).on(scrollEventName, preventScroll)
+                .on("keydown", preventScrollKeys);
+            $(window).on(scrollEventName, preventScroll)
+                .on("touchstart", onScrollStartCapture)
+                .on("touchmove", preventScroll)
+                .on("touchend", onScrollEndCapture); // mobile
         }
 
         function a11y_removeScrollListeners() {
             var scrollEventName = "wheel mousewheel";
-            $(window).off(scrollEventName, preventScroll);
-            $(document).off(scrollEventName, preventScroll);
-            $(window).off("touchstart", onScrollStartCapture); // mobile
-            $(window).off("touchmove", preventScroll); // mobile
-            $(window).off("touchend", onScrollEndCapture); // mobile
-            $(document).off("keydown", preventScrollKeys);  
+            $(window).off(scrollEventName, preventScroll)
+                .off("touchstart", onScrollStartCapture)
+                .off("touchmove", preventScroll)
+                .off("touchend", onScrollEndCapture); // mobile
+            $(document).off(scrollEventName, preventScroll)
+                .off("keydown", preventScrollKeys);
         }
 
         function a11y_triggerReadEvent($element) {
